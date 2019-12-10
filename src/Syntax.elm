@@ -5,17 +5,11 @@ import Element.Font as Font
 
 
 invertColors =
-    --True
-    False
+    True
 
 
 invertGrays =
-    --True
-    False
-
-
-fontSize =
-    32
+    True
 
 
 

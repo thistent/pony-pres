@@ -1,4 +1,4 @@
-module Main exposing (Model, Msg(..), init, main, subscriptions, update, view)
+module AnimTest exposing (Model, Msg(..), init, main, subscriptions, update, view)
 
 import Animation exposing (px)
 import Browser
