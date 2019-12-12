@@ -119,7 +119,7 @@ gameUpdate msg model =
 
 
 easing ease =
-    { duration = 100, ease = ease }
+    { duration = 200, ease = ease }
 
 
 
@@ -146,7 +146,7 @@ update msg model =
                         [ Animation.set
                             [ Animation.opacity 0 ]
                         , Animation.toWith
-                            (Animation.easing <| easing <| Ease.linear)
+                            (Animation.easing <| easing <| Ease.inOutCirc)
                             [ Animation.opacity 0 ]
                         ]
                         model.style
@@ -233,13 +233,14 @@ view model =
     { title = "Type Safety in Pony"
     , body =
         [ Element.layout
-            ((List.map htmlAttribute <|
-                Animation.render model.style
-             )
-                ++ pageStyle
-            )
+            pageStyle
           <|
-            el (fillSpacePlus [ padding 5 ]) <|
+            el
+                ([ padding 5, Bg.color <| invG <| rgb 0 0 0 ]
+                    |> fillSpacePlus
+                    |> List.append (List.map htmlAttribute <| Animation.render model.style)
+                )
+            <|
                 Maybe.withDefault none <|
                     Dict.get model.slideName <|
                         slides model.gameState
@@ -255,7 +256,7 @@ makeSlide : GameModel -> Element Msg -> Element Msg
 makeSlide gameState content =
     column fillSpace <|
         [ content
-        , el [ width fill, padding 30 ] <| hud gameState
+        , hud gameState
         ]
 
 
@@ -319,10 +320,14 @@ edges =
 
 hud : GameModel -> Element Msg
 hud gameState =
-    row
-        [ width fill, spacing 15, Font.size <| round <| gameState.fontSize ]
-    <|
-        if gameState.showHud then
+    if gameState.showHud then
+        row
+            [ width fill
+            , Bg.color <| inv <| rgb 0.05 0.05 0.05
+            , padding 15
+            , spacing 15
+            , Font.size <| round <| gameState.fontSize
+            ]
             [ text "Lives: "
             , row [ spacing 15 ] <|
                 if gameState.lives > 0 then
@@ -361,31 +366,15 @@ hud gameState =
                 ]
             ]
 
-        else
+    else
+        row
+            [ width fill, spacing 15, Font.size <| round <| gameState.fontSize ]
             [ text " " ]
 
 
 emptyLine : Element Msg
 emptyLine =
     el [] <| text " "
-
-
-codeList =
-    [ row [] [ S.white <| text "actor ", S.blue <| text "Main" ]
-    , row []
-        [ S.white <| text "  new"
-        , S.normal <| text " create("
-        , S.aqua <| text "env"
-        , S.normal <| text ": "
-        , S.blue <| text "Env "
-        , S.orange <| text "val"
-        , S.normal <| text ") =>"
-        ]
-    , row []
-        [ S.aqua <| text "    env"
-        , S.normal <| text ".out.print(\"Hello, World!\")"
-        ]
-    ]
 
 
 slides : GameModel -> Dict String (Element Msg)

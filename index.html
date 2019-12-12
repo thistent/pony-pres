@@ -4770,10 +4770,10 @@ var $elm$core$Array$builderToArray = F2(
 		if (!builder.g) {
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
-				$elm$core$Elm$JsArray$length(builder.j),
+				$elm$core$Elm$JsArray$length(builder.k),
 				$elm$core$Array$shiftStep,
 				$elm$core$Elm$JsArray$empty,
-				builder.j);
+				builder.k);
 		} else {
 			var treeLen = builder.g * $elm$core$Array$branchFactor;
 			var depth = $elm$core$Basics$floor(
@@ -4782,10 +4782,10 @@ var $elm$core$Array$builderToArray = F2(
 			var tree = A2($elm$core$Array$treeFromBuilder, correctNodeList, builder.g);
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
-				$elm$core$Elm$JsArray$length(builder.j) + treeLen,
+				$elm$core$Elm$JsArray$length(builder.k) + treeLen,
 				A2($elm$core$Basics$max, 5, depth * $elm$core$Array$shiftStep),
 				tree,
-				builder.j);
+				builder.k);
 		}
 	});
 var $elm$core$Basics$idiv = _Basics_idiv;
@@ -4798,7 +4798,7 @@ var $elm$core$Array$initializeHelp = F5(
 				return A2(
 					$elm$core$Array$builderToArray,
 					false,
-					{m: nodeList, g: (len / $elm$core$Array$branchFactor) | 0, j: tail});
+					{m: nodeList, g: (len / $elm$core$Array$branchFactor) | 0, k: tail});
 			} else {
 				var leaf = $elm$core$Array$Leaf(
 					A3($elm$core$Elm$JsArray$initialize, $elm$core$Array$branchFactor, fromIndex, fn));
@@ -5162,7 +5162,7 @@ var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
 var $author$project$Main$initGameState = {
 	bd: 1,
 	bh: 1,
-	l: 0,
+	h: 0,
 	I: _Utils_Tuple2(false, false),
 	y: $elm$core$Dict$empty,
 	ai: 3,
@@ -6484,8 +6484,24 @@ var $mdgriffith$elm_style_animation$Animation$easing = function (_v0) {
 		});
 };
 var $author$project$Main$easing = function (ease) {
-	return {c_: 100, c$: ease};
+	return {c_: 200, c$: ease};
 };
+var $elm_community$easing_functions$Ease$flip = F2(
+	function (easing, time) {
+		return 1 - easing(1 - time);
+	});
+var $elm$core$Basics$pow = _Basics_pow;
+var $elm$core$Basics$sqrt = _Basics_sqrt;
+var $elm_community$easing_functions$Ease$outCirc = function (time) {
+	return $elm$core$Basics$sqrt(
+		1 - A2($elm$core$Basics$pow, time - 1, 2));
+};
+var $elm_community$easing_functions$Ease$inCirc = $elm_community$easing_functions$Ease$flip($elm_community$easing_functions$Ease$outCirc);
+var $elm_community$easing_functions$Ease$inOut = F3(
+	function (e1, e2, time) {
+		return (time < 0.5) ? (e1(time * 2) / 2) : (0.5 + (e2((time - 0.5) * 2) / 2));
+	});
+var $elm_community$easing_functions$Ease$inOutCirc = A2($elm_community$easing_functions$Ease$inOut, $elm_community$easing_functions$Ease$inCirc, $elm_community$easing_functions$Ease$outCirc);
 var $elm$core$List$drop = F2(
 	function (n, list) {
 		drop:
@@ -8540,7 +8556,7 @@ var $author$project$Main$update = F2(
 										A2(
 										$mdgriffith$elm_style_animation$Animation$toWith,
 										$mdgriffith$elm_style_animation$Animation$easing(
-											$author$project$Main$easing($elm_community$easing_functions$Ease$linear)),
+											$author$project$Main$easing($elm_community$easing_functions$Ease$inOutCirc)),
 										_List_fromArray(
 											[
 												$mdgriffith$elm_style_animation$Animation$opacity(0)
@@ -8598,7 +8614,7 @@ var $author$project$Main$update = F2(
 				var gameState = model.Y;
 				var newGameState = _Utils_update(
 					gameState,
-					{l: viewport.eg.eh / 56.0});
+					{h: viewport.eg.eh / 56.0});
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
@@ -8612,6 +8628,14 @@ var $author$project$Main$update = F2(
 						model,
 						{a1: model.aw, aw: pressedNew}),
 					$elm$core$Platform$Cmd$none);
+		}
+	});
+var $elm$core$List$append = F2(
+	function (xs, ys) {
+		if (!ys.b) {
+			return xs;
+		} else {
+			return A3($elm$core$List$foldr, $elm$core$List$cons, ys, xs);
 		}
 	});
 var $mdgriffith$elm_ui$Internal$Model$Colored = F3(
@@ -9028,7 +9052,7 @@ var $mdgriffith$elm_ui$Internal$Model$formatBoxShadow = function (shadow) {
 					$elm$core$Maybe$Just(
 					$elm$core$String$fromFloat(shadow.D) + 'px'),
 					$elm$core$Maybe$Just(
-					$mdgriffith$elm_ui$Internal$Model$formatColor(shadow.k))
+					$mdgriffith$elm_ui$Internal$Model$formatColor(shadow.l))
 				])));
 };
 var $elm$core$Maybe$map = F2(
@@ -9095,7 +9119,7 @@ var $mdgriffith$elm_ui$Internal$Model$renderFocusStyle = function (focus) {
 								$mdgriffith$elm_ui$Internal$Model$formatBoxShadow(
 									{
 										x: shadow.x,
-										k: shadow.k,
+										l: shadow.l,
 										bG: false,
 										b: A2(
 											$elm$core$Tuple$mapSecond,
@@ -9143,7 +9167,7 @@ var $mdgriffith$elm_ui$Internal$Model$renderFocusStyle = function (focus) {
 								$mdgriffith$elm_ui$Internal$Model$formatBoxShadow(
 									{
 										x: shadow.x,
-										k: shadow.k,
+										l: shadow.l,
 										bG: false,
 										b: A2(
 											$elm$core$Tuple$mapSecond,
@@ -9202,14 +9226,6 @@ var $mdgriffith$elm_ui$Internal$Style$CenterY = 5;
 var $mdgriffith$elm_ui$Internal$Style$Top = 0;
 var $mdgriffith$elm_ui$Internal$Style$alignments = _List_fromArray(
 	[0, 1, 2, 3, 4, 5]);
-var $elm$core$List$append = F2(
-	function (xs, ys) {
-		if (!ys.b) {
-			return xs;
-		} else {
-			return A3($elm$core$List$foldr, $elm$core$List$cons, ys, xs);
-		}
-	});
 var $elm$core$List$concat = function (lists) {
 	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
 };
@@ -14155,7 +14171,7 @@ var $mdgriffith$elm_ui$Internal$Model$focusDefaultStyle = {
 	dJ: $elm$core$Maybe$Just(
 		{
 			x: 0,
-			k: A4($mdgriffith$elm_ui$Internal$Model$Rgba, 155 / 255, 203 / 255, 1, 1),
+			l: A4($mdgriffith$elm_ui$Internal$Model$Rgba, 155 / 255, 203 / 255, 1, 1),
 			b: _Utils_Tuple2(0, 0),
 			D: 3
 		})
@@ -15399,16 +15415,20 @@ var $elm$core$Dict$values = function (dict) {
 		dict);
 };
 var $author$project$Main$hud = function (gameState) {
-	return A2(
+	return gameState.aO ? A2(
 		$mdgriffith$elm_ui$Element$row,
 		_List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+				$mdgriffith$elm_ui$Element$Background$color(
+				$author$project$Syntax$inv(
+					A3($mdgriffith$elm_ui$Element$rgb, 0.05, 0.05, 0.05))),
+				$mdgriffith$elm_ui$Element$padding(15),
 				$mdgriffith$elm_ui$Element$spacing(15),
 				$mdgriffith$elm_ui$Element$Font$size(
-				$elm$core$Basics$round(gameState.l))
+				$elm$core$Basics$round(gameState.h))
 			]),
-		gameState.aO ? _List_fromArray(
+		_List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$text('Lives: '),
 				A2(
@@ -15478,7 +15498,16 @@ var $author$project$Main$hud = function (gameState) {
 						_List_Nil,
 						$elm$core$Dict$values(gameState.y))
 					]))
-			]) : _List_fromArray(
+			])) : A2(
+		$mdgriffith$elm_ui$Element$row,
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+				$mdgriffith$elm_ui$Element$spacing(15),
+				$mdgriffith$elm_ui$Element$Font$size(
+				$elm$core$Basics$round(gameState.h))
+			]),
+		_List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$text(' ')
 			]));
@@ -15491,14 +15520,7 @@ var $author$project$Main$makeSlide = F2(
 			_List_fromArray(
 				[
 					content,
-					A2(
-					$mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-							$mdgriffith$elm_ui$Element$padding(30)
-						]),
-					$author$project$Main$hud(gameState))
+					$author$project$Main$hud(gameState)
 				]));
 	});
 var $author$project$Syntax$orange = $author$project$Syntax$colorEl(
@@ -15571,7 +15593,7 @@ var $author$project$Main$slides = function (gameState) {
 									[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
 								A2(
 									$author$project$Main$titleText,
-									gameState.l,
+									gameState.h,
 									A2(
 										$mdgriffith$elm_ui$Element$row,
 										_List_Nil,
@@ -15641,7 +15663,7 @@ var $author$project$Main$slides = function (gameState) {
 											_List_fromArray(
 												[
 													$mdgriffith$elm_ui$Element$Font$size(
-													$elm$core$Basics$round((gameState.l * 2) / 3)),
+													$elm$core$Basics$round((gameState.h * 2) / 3)),
 													$mdgriffith$elm_ui$Element$Font$bold
 												]),
 											$author$project$Main$gotoSlide(
@@ -15666,7 +15688,7 @@ var $author$project$Main$slides = function (gameState) {
 													_List_fromArray(
 														[
 															$mdgriffith$elm_ui$Element$Font$size(
-															$elm$core$Basics$round((gameState.l * 4) / 3)),
+															$elm$core$Basics$round((gameState.h * 4) / 3)),
 															$mdgriffith$elm_ui$Element$Font$bold
 														]),
 													$mdgriffith$elm_ui$Element$text('About Pony :')),
@@ -15697,7 +15719,7 @@ var $author$project$Main$slides = function (gameState) {
 											_List_fromArray(
 												[
 													$mdgriffith$elm_ui$Element$Font$size(
-													$elm$core$Basics$round((gameState.l * 2) / 3)),
+													$elm$core$Basics$round((gameState.h * 2) / 3)),
 													$mdgriffith$elm_ui$Element$Font$bold
 												]),
 											$author$project$Main$gotoSlide(
@@ -15722,7 +15744,7 @@ var $author$project$Main$slides = function (gameState) {
 													_List_fromArray(
 														[
 															$mdgriffith$elm_ui$Element$Font$size(
-															$elm$core$Basics$round((gameState.l * 4) / 3)),
+															$elm$core$Basics$round((gameState.h * 4) / 3)),
 															$mdgriffith$elm_ui$Element$Font$bold
 														]),
 													$mdgriffith$elm_ui$Element$text('Some Guarantees :')),
@@ -15826,7 +15848,7 @@ var $author$project$Main$slides = function (gameState) {
 										$mdgriffith$elm_ui$Element$padding(30),
 										$mdgriffith$elm_ui$Element$Font$letterSpacing(1.0),
 										$mdgriffith$elm_ui$Element$Font$size(
-										$elm$core$Basics$round(gameState.l)),
+										$elm$core$Basics$round(gameState.h)),
 										$mdgriffith$elm_ui$Element$Font$justify,
 										$mdgriffith$elm_ui$Element$centerY
 									]),
@@ -16091,7 +16113,7 @@ var $author$project$Main$slides = function (gameState) {
 									[
 										A2(
 										$author$project$Main$titleText,
-										gameState.l,
+										gameState.h,
 										$mdgriffith$elm_ui$Element$text('Where to go now?')),
 										$author$project$Main$gotoSlide(
 										A3($author$project$Main$Slide, gameState, 'refCaps 1', 'Reference Capabilities')),
@@ -16203,7 +16225,7 @@ var $author$project$Main$slides = function (gameState) {
 									$mdgriffith$elm_ui$Element$centerX,
 									$mdgriffith$elm_ui$Element$centerY,
 									$mdgriffith$elm_ui$Element$Font$size(
-									$elm$core$Basics$round(gameState.l * 1.4))
+									$elm$core$Basics$round(gameState.h * 1.4))
 								]),
 							$mdgriffith$elm_ui$Element$text('iso -> trn -> ( ref | val ) -> box -> tag')),
 							A2(
@@ -16230,7 +16252,7 @@ var $author$project$Main$slides = function (gameState) {
 										$mdgriffith$elm_ui$Element$centerX,
 										$mdgriffith$elm_ui$Element$centerY,
 										$mdgriffith$elm_ui$Element$Font$size(
-										$elm$core$Basics$round(gameState.l * 1.4))
+										$elm$core$Basics$round(gameState.h * 1.4))
 									]),
 								$mdgriffith$elm_ui$Element$text('iso -> trn -> ( ref | val ) -> box -> tag'))),
 							A2(
@@ -16239,7 +16261,7 @@ var $author$project$Main$slides = function (gameState) {
 								_List_fromArray(
 									[
 										$mdgriffith$elm_ui$Element$Font$size(
-										$elm$core$Basics$round(gameState.l))
+										$elm$core$Basics$round(gameState.h))
 									])),
 							A2(
 								$mdgriffith$elm_ui$Element$column,
@@ -16323,7 +16345,7 @@ var $author$project$Main$slides = function (gameState) {
 										$mdgriffith$elm_ui$Element$centerX,
 										$mdgriffith$elm_ui$Element$centerY,
 										$mdgriffith$elm_ui$Element$Font$size(
-										$elm$core$Basics$round(gameState.l * 1.4))
+										$elm$core$Basics$round(gameState.h * 1.4))
 									]),
 								$mdgriffith$elm_ui$Element$text('iso -> trn -> ( ref | val ) -> box -> tag'))),
 							A2(
@@ -16337,7 +16359,7 @@ var $author$project$Main$slides = function (gameState) {
 										_List_fromArray(
 											[
 												$mdgriffith$elm_ui$Element$Font$size(
-												$elm$core$Basics$round(gameState.l))
+												$elm$core$Basics$round(gameState.h))
 											])),
 									A2(
 										$mdgriffith$elm_ui$Element$column,
@@ -16778,7 +16800,7 @@ var $author$project$Main$view = function (model) {
 			$author$project$Syntax$invG(
 				A3($mdgriffith$elm_ui$Element$rgb, 0.8, 0.8, 0.8))),
 			$mdgriffith$elm_ui$Element$Font$size(
-			$elm$core$Basics$round(model.Y.l)),
+			$elm$core$Basics$round(model.Y.h)),
 			$mdgriffith$elm_ui$Element$spacing(30),
 			$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 			$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill)
@@ -16788,19 +16810,23 @@ var $author$project$Main$view = function (model) {
 			[
 				A2(
 				$mdgriffith$elm_ui$Element$layout,
-				_Utils_ap(
-					A2(
-						$elm$core$List$map,
-						$mdgriffith$elm_ui$Element$htmlAttribute,
-						$mdgriffith$elm_style_animation$Animation$render(model.F)),
-					pageStyle),
+				pageStyle,
 				A2(
 					$mdgriffith$elm_ui$Element$el,
-					$author$project$Main$fillSpacePlus(
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$padding(5)
-							])),
+					A2(
+						$elm$core$List$append,
+						A2(
+							$elm$core$List$map,
+							$mdgriffith$elm_ui$Element$htmlAttribute,
+							$mdgriffith$elm_style_animation$Animation$render(model.F)),
+						$author$project$Main$fillSpacePlus(
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$padding(5),
+									$mdgriffith$elm_ui$Element$Background$color(
+									$author$project$Syntax$invG(
+										A3($mdgriffith$elm_ui$Element$rgb, 0, 0, 0)))
+								]))),
 					A2(
 						$elm$core$Maybe$withDefault,
 						$mdgriffith$elm_ui$Element$none,
