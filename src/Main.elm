@@ -886,7 +886,7 @@ slides gameState =
                 , el fillSpace <|
                     column [ centerX, spacing 20 ]
                         [ text "An unforgable token identifies each object. "
-                        , text "It give a program authority to do things "
+                        , text "It gives a program authority to do things "
                         , text "with that object."
                         ]
                 , el [ alignRight, alignBottom ] <|
